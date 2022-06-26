@@ -19,7 +19,12 @@ app.use(userRouter.routes()).use(userRouter.allowedMethods());
 //check status
 const db = mongoose.connection;
 
-const dbUpdate = { useNewUrlParser: true, useUnifiedTopology: true };
+const dbUpdate = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+};
 
 //connect db
 mongoose.connect(process.env.DB, dbUpdate);

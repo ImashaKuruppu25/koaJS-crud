@@ -100,8 +100,38 @@ const getAllDetails = async (ctx) => {
   ctx.status = status;
 };
 
+const updateUser = async (ctx) => {
+  try {
+    const { fName, lName, age, phone } = ctx.request.body;
+    const user = await User.findByIdAndUpdate(
+      ctx.request.user._id,
+      {
+        "name.fName": fName,
+        "name.lName": lName,
+        age: age,
+        phone: phone,
+      },
+      (err, result) => {
+        if (err) {
+          message = err;
+          status = 400;
+        } else {
+          message = result;
+          status = 200;
+        }
+      }
+    );
+  } catch (error) {
+    message = error;
+    status = 500;
+  }
+
+  ctx.body = message;
+  ctx.status = status;
+};
+
 //genarate token
 const createAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESSTOKEN, { expiresIn: "1h" });
 };
-module.exports = { register, login, getUserDetails, getAllDetails };
+module.exports = { register, login, getUserDetails, getAllDetails, updateUser };

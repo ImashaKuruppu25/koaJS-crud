@@ -19,6 +19,7 @@ const auth = async (ctx, next) => {
         ctx.status = 400;
         ctx.body = "invalid authantication";
       }
+     
       ctx.request.user = user;
       await next();
     });
