@@ -4,7 +4,6 @@ require("dotenv").config();
 
 //middleware
 const auth = async (ctx, next) => {
-    
   try {
     //get token from header
     const token = await ctx.get("Authorization");
@@ -14,12 +13,12 @@ const auth = async (ctx, next) => {
       ctx.status = 400;
       ctx.body = "cannot found token";
     }
-    await verify(token, process.env.ACCESSTOKEN, async(err, user) => {
+    await verify(token, process.env.ACCESSTOKEN, async (err, user) => {
       if (err) {
         ctx.status = 400;
         ctx.body = "invalid authantication";
       }
-     
+
       ctx.request.user = user;
       await next();
     });
